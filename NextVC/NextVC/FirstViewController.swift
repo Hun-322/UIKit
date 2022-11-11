@@ -56,7 +56,7 @@ class FirstViewController: UIViewController {
     }
     
     @objc func backButtonTapped() {
-//        print("뒤로가기 버튼 눌렀음")
+        // print("뒤로가기 버튼 눌렀음")
         // 전 화면으로 돌아가는 메서드
         dismiss(animated: true, completion: nil)
     }
