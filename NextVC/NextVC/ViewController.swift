@@ -46,12 +46,24 @@ class ViewController: UIViewController {
     
     // 3) 스토리보드에서의 화면 이동(간접 세그웨이)
     @IBAction func storyboardWithSegueButtonTapped(_ sender: UIButton) {
+        // storyboardWithSegueButtonTapped가 눌렸을때 performSegue는 실행만 하는것
+        // 데이터를 전달을 할려면 prepare메서드를 구현 해줘야한다.
+        // performSegue를 실행을 시킴으로써 그 segue 객체를 활성화 시키는것
+        // 그리고 performSegue 내부에서 prepare를 실행시킴
+        performSegue(withIdentifier: "toThirdVC", sender: self)
         
-
         
+    }
+    // segue에 데이터 전달 방법
+    // segue는 전달된 Parameter의 이름
+    // 즉 segue는 stroyBoard Main에 보면 VC랑 ThirdVC랑 연결되있는 선이다. == 화면이동을 관리하는 객체
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
-        
-        
+        if segue.identifier == "toThirdVC" {
+            let thirdVC = segue.destination as! ThirdViewController
+            // 데이터 전달
+            thirdVC.someString = "엄마상어"
+        }
     }
     
 
