@@ -8,7 +8,7 @@
 import UIKit
 
 class ViewController: UIViewController {
-
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -21,7 +21,7 @@ class ViewController: UIViewController {
         
         firstVC.someString = "아기상어"
         // 코드로 만들때만 가능 why? 스토리보드가 실행되는 매커니즘은 코드로된 VC를 메모리에 올리고 그다음 스토리보드를 올린 후 두개를 연결하는 과정을 거치는데
-        // 스토리보드로 이 코드를 실행시키면 두개를(VC와 스토리보드) 연결하는 과정전에 코드가 실행되서 아직 메모리에 올라가지않았다고 오류가난다. 
+        // 스토리보드로 이 코드를 실행시키면 두개를(VC와 스토리보드) 연결하는 과정전에 코드가 실행되서 아직 메모리에 올라가지않았다고 오류가난다.
         firstVC.mainLabel.text = "아기상어"
         
         // 다음 화면을 전체화면으로 변경
@@ -29,7 +29,7 @@ class ViewController: UIViewController {
         present(firstVC, animated: true, completion: nil)
     }
     
-    // 2) 코드로 스토리보드 객체를 생성해서, 화면 이동
+    // 2) 코드로 스토리보드 객체를 생성해서, 화면 이동 (추천!)
     @IBAction func storyboardWithCodeButtonTapped(_ sender: UIButton) {
         guard let secondVC = storyboard?.instantiateViewController(withIdentifier: "secondVC") as? SecondViewController else { return }
         
@@ -64,9 +64,17 @@ class ViewController: UIViewController {
             // 데이터 전달
             thirdVC.someString = "엄마상어"
         }
+        if segue.identifier == "toFourthVC" {
+            let fourVC =  segue.destination as! FourthViewController
+            fourVC.someString = "마지막 데이터 전달 완료"
+        }
+    }
+    // 직접적으로 버튼에서 VC로 세그웨이를 연결했을때 조건을 걸어줄 수 있는 메서드
+    override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {
+        true
     }
     
-
+    
     
 }
 
