@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		54696E7F2925B89100D7DA30 /* BMICalculatorManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54696E7E2925B89100D7DA30 /* BMICalculatorManager.swift */; };
 		5484BEB82924CBA000CC07A1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5484BEB72924CBA000CC07A1 /* AppDelegate.swift */; };
 		5484BEBA2924CBA000CC07A1 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5484BEB92924CBA000CC07A1 /* SceneDelegate.swift */; };
 		5484BEBC2924CBA000CC07A1 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5484BEBB2924CBA000CC07A1 /* ViewController.swift */; };
@@ -17,6 +18,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		54696E7E2925B89100D7DA30 /* BMICalculatorManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BMICalculatorManager.swift; sourceTree = "<group>"; };
 		5484BEB42924CBA000CC07A1 /* BMICalculator.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BMICalculator.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5484BEB72924CBA000CC07A1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		5484BEB92924CBA000CC07A1 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -39,6 +41,31 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		54696E7B2925B7D200D7DA30 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				54696E7E2925B89100D7DA30 /* BMICalculatorManager.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		54696E7C2925B7E100D7DA30 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				5484BEBD2924CBA000CC07A1 /* Main.storyboard */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		54696E7D2925B7E600D7DA30 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				5484BEBB2924CBA000CC07A1 /* ViewController.swift */,
+				5486BA932924DB40001F4CEF /* SecondViewController.swift */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
 		5484BEAB2924CBA000CC07A1 = {
 			isa = PBXGroup;
 			children = (
@@ -60,9 +87,9 @@
 			children = (
 				5484BEB72924CBA000CC07A1 /* AppDelegate.swift */,
 				5484BEB92924CBA000CC07A1 /* SceneDelegate.swift */,
-				5484BEBB2924CBA000CC07A1 /* ViewController.swift */,
-				5486BA932924DB40001F4CEF /* SecondViewController.swift */,
-				5484BEBD2924CBA000CC07A1 /* Main.storyboard */,
+				54696E7B2925B7D200D7DA30 /* Models */,
+				54696E7C2925B7E100D7DA30 /* Views */,
+				54696E7D2925B7E600D7DA30 /* Controllers */,
 				5484BEC02924CBA200CC07A1 /* Assets.xcassets */,
 				5484BEC22924CBA200CC07A1 /* LaunchScreen.storyboard */,
 				5484BEC52924CBA200CC07A1 /* Info.plist */,
@@ -144,6 +171,7 @@
 				5486BA942924DB40001F4CEF /* SecondViewController.swift in Sources */,
 				5484BEBC2924CBA000CC07A1 /* ViewController.swift in Sources */,
 				5484BEB82924CBA000CC07A1 /* AppDelegate.swift in Sources */,
+				54696E7F2925B89100D7DA30 /* BMICalculatorManager.swift in Sources */,
 				5484BEBA2924CBA000CC07A1 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -292,7 +320,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = BMI/Info.plist;
+				INFOPLIST_FILE = BMICalculator/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
@@ -323,7 +351,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = BMI/Info.plist;
+				INFOPLIST_FILE = BMICalculator/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
