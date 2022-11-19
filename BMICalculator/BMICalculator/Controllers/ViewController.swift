@@ -13,13 +13,14 @@ class ViewController: UIViewController {
     @IBOutlet weak var heightTextField: UITextField!
     @IBOutlet weak var weightTextField: UITextField!
     @IBOutlet weak var calculateButton: UIButton!
-        
+    
     var bmiManager = BMICalculatorManager()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         makeUI()
     }
+    
     func makeUI() {
         heightTextField.delegate = self
         weightTextField.delegate = self
@@ -34,10 +35,9 @@ class ViewController: UIViewController {
     }
     // BMI계산하기 - 버튼 누르면(다음화면)
     @IBAction func calculateButtonTapped(_ sender: UIButton) {
-        //BMI 결과 값 뽑아내기
-        bmiManager.calculateBMI(height: heightTextField.text!, weight: weightTextField.text!)
     }
     
+    // 조건에 따라 다음화면 이동할지/말지
     override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {
         if heightTextField.text == "" || weightTextField.text == "" {
             mainLabel.text = "키와 몸무게를 입력하셔야만 합니다!!"
@@ -48,15 +48,14 @@ class ViewController: UIViewController {
         mainLabel.textColor = .black
         return true
     }
-    
+    // 다음화면 넘어가기 전에 준비 (일반적인 데이터 전달)
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        // 항상 식별자 먼저 확인
         if segue.identifier == "toSecondVC" {
             let secondVC = segue.destination as! SecondViewController
             
             // 계산된 결과 값을 다음화면으로 전달
-            secondVC.bmiNumber = bmiManager.getBMIResult()
-            secondVC.bmiColor = bmiManager.getBackgroundColor()
-            secondVC.adviceString = bmiManager.getBMIAdviceString()
+            secondVC.bmi = bmiManager.getBMI(height: heightTextField.text!, weight: weightTextField.text!)
         }
         // 다음화면으로 가기전에 텍스트필드 비우기
         heightTextField.text = ""
@@ -80,7 +79,7 @@ extension ViewController: UITextFieldDelegate {
         if heightTextField.text != "", weightTextField.text != "" {
             weightTextField.resignFirstResponder()
             return true
-        // 다음 텍스트필드로 넘어가도록
+            // 다음 텍스트필드로 넘어가도록
         } else if heightTextField.text != "" {
             weightTextField.becomeFirstResponder()
             return true

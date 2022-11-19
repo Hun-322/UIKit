@@ -8,20 +8,31 @@
 import UIKit
 
 class SecondViewController: UIViewController {
-
+    
     @IBOutlet weak var bmiNumberLabel: UILabel!
     @IBOutlet weak var adviceLabel: UILabel!
     @IBOutlet weak var backButton: UIButton!
     
-    var bmiNumber: Double?
-    var adviceString: String?
-    var bmiColor: UIColor?
+    //    // 전화면에서 전달받은 데이터들
+    //    var bmiNumber: Double?
+    //    var adviceString: String?
+    //    var bmiColor: UIColor?
+    
+    var bmi: BMI?
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        // 전화면에서 전달받은 데이터들을 통해 셋팅
         makeUI()
+        
+        guard let bmi = bmi else { return }
+        
+        bmiNumberLabel.text = "\(bmi.value)"
+        bmiNumberLabel.backgroundColor = bmi.MatchColor
+        adviceLabel.text = bmi.advice
+        
     }
-
+    
     func makeUI() {
         bmiNumberLabel.clipsToBounds = true
         bmiNumberLabel.layer.cornerRadius = 8
@@ -30,13 +41,6 @@ class SecondViewController: UIViewController {
         backButton.setTitle("다시 계산하기", for: .normal)
         backButton.clipsToBounds = true
         backButton.layer.cornerRadius = 5
-
-        
-        guard let bmi = bmiNumber else {return}
-        bmiNumberLabel.text = String(bmi)
-        
-        adviceLabel.text = adviceString
-        bmiNumberLabel.backgroundColor = bmiColor
     }
     
     @IBAction func backButtonTapped(_ sender: UIButton) {
