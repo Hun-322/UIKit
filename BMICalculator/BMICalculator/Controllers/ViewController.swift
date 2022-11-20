@@ -33,6 +33,7 @@ class ViewController: UIViewController {
         heightTextField.placeholder = "cm단위로 입력해주세요"
         weightTextField.placeholder = "kg단위로 입력해주세요"
     }
+    
     // BMI계산하기 - 버튼 누르면(다음화면)
     @IBAction func calculateButtonTapped(_ sender: UIButton) {
     }
