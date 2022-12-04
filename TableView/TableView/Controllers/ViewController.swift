@@ -7,15 +7,10 @@
 
 import UIKit
 // TableView를 사용하려면 UITableViewDataSource를 채택해야함
-class ViewController: UIViewController,UITableViewDataSource{
+class ViewController: UIViewController {
     // 영화데이터를 가지고있는 저장속성
-    var moviesArray: [Movie] = [
-        Movie(movieImage: UIImage(named: "blackpanther.jpeg"), movieName: "블랙팬서2", movieDescription: "국왕이자 ‘블랙 팬서’인 '티찰라'의 죽음 이후 수많은 강대국으로부터 위협을 받게 된 와칸다의 이야기"),
-        Movie(movieImage: UIImage(named: "hyojoo.jpeg"), movieName: "뷰티인사이드", movieDescription: "남자, 여자, 아이, 노인.. 심지어 외국인까지! 자고 일어나면 매일 다른 모습으로 변하는 남자의 이야기"),
-        Movie(movieImage: UIImage(named: "meto.jpeg"), movieName: "동감", movieDescription: "시간을 뛰어넘어 기적처럼 연결된 ‘용’과 ‘무늬’는 서로의 사랑과 우정을 이야기"),
-        Movie(movieImage: UIImage(named: "nope.jpeg"), movieName: "놉", movieDescription: "그것은 우리 위에 있다.거대하고, 주목받길 원하고, 미쳤다. 나쁜 기적이라는 것도 있을까? "),
-        Movie(movieImage: UIImage(named: "interstellar.jpeg"), movieName: "인터스텔라", movieDescription: " 우린 답을 찾을 거야, 늘 그랬듯이 세계 각국의 정부와 경제가 완전히 붕괴된 미래가 다가온다.")
-    ]
+//    var moviesArray: [Movie] = []
+    var movieDataManager = DataManager()
 
     @IBOutlet weak var tableView: UITableView!
     
@@ -26,14 +21,21 @@ class ViewController: UIViewController,UITableViewDataSource{
         tableView.dataSource = self
         tableView.rowHeight = 120
         
+        // 먼저 makeMovieData를 생성 후,
+        // movieDataManager에서 movieData받아와서 저장
+        movieDataManager.makeMovieData()
+//        moviesArray = movieDataManager.getMovieData()
     }
-    
-    // 몇개의 컨텐츠를 만들면되는지 알려주는 메서드
+}
+
+// 일반적으로 프로토콜을 채택 후 메서드를 구현할때 가독성을 위해 extension을 사용해서 따로 분리해준다.
+extension ViewController: UITableViewDataSource {
+    // numberOfRowsInSection -> 몇개의 컨텐츠를 만들면되는지 알려주는 메서드
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // 컨텐츠가 몇개인지 카운트
-        return moviesArray.count
+        return movieDataManager.getMovieData().count
     }
-    
+    // cellForRowAt -> 셀의 구성(셀을 어떻게 그릴까?)을 어떻게 할지 물어보는 메서드
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         // 기존의 만들어놨던 MovieCell을 꺼내서 사용하는 메서드(storyboard에서 사용하려는 cell에 Identifier을 설정해서 넣어주면됨!
         // for: <#T##IndexPath#> 란? -> 몇번째 경로에 셀을 꺼낼껀지?
@@ -42,14 +44,16 @@ class ViewController: UIViewController,UITableViewDataSource{
 //        indexPath.section -> 그룹의 번호를 매기는것
 //        indexPath.row -> 그룹에서 행의 번호
         
-        let movie = moviesArray[indexPath.row]
+        let array = movieDataManager.getMovieData()
+        let movie = array[indexPath.row]
         
         cell.mainImageView.image = movie.movieImage
         cell.movieNameLabel.text = movie.movieName
         cell.descriptionLabel.text = movie.movieDescription
+        // cell 클릭 시 반응조정 메서드
+        cell.selectionStyle = .none
         
         return cell
     }
-
 }
 
