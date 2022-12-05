@@ -11,7 +11,7 @@ class DataManager {
     // movieData들을 바로 안넣는 이유는 ?
     // movieDataArray를 생성 후 바로 data를 넣어도 상관없지만,
     // 일반적으로 앱을 만들면 우리가 만든 DataManager는 빈 배열로 시작을 하고, 서버와 통신을 해서 통신 결과를 가져와서 배열에 할당하는 형식으로 진행이 되는것을 연습하기 위해서 data들을 바로 넣지 않았다. 
-    var movieDataArray: [Movie] = []
+    private var movieDataArray: [Movie] = []
     
     func makeMovieData() {
         movieDataArray = [
@@ -28,5 +28,5 @@ class DataManager {
         ]
     }
     // 데이터 전달 메서드 
-    func getMovieData() -> [Movie]{ return movieDataArray }
+    func getMovieData() -> [Movie] { return movieDataArray }
 }
