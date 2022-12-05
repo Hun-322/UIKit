@@ -8,8 +8,10 @@
 import UIKit
 // TableView를 사용하려면 UITableViewDataSource를 채택해야함
 class ViewController: UIViewController {
-    // 영화데이터를 가지고있는 저장속성
+    // 테이블뷰의 데이터를 표시하기 위한 배열
 //    var moviesArray: [Movie] = []
+    
+    // MVC패턴을 위한 데이터 매니저 (배열 관리 - 데이터)
     var movieDataManager = DataManager()
 
     @IBOutlet weak var tableView: UITableView!
@@ -19,6 +21,7 @@ class ViewController: UIViewController {
         // UITableViewDataSource를 채택했기 때문에 delegate pattern과 같이 self(ViewController)를 할당해줌
         // 그래서 이게 무슨 소리? -> TableView에 대리자가 self(ViewController)가 된다는 뜻이다!
         tableView.dataSource = self
+        tableView.delegate = self
         tableView.rowHeight = 120
         
         // 먼저 makeMovieData를 생성 후,
@@ -54,6 +57,32 @@ extension ViewController: UITableViewDataSource {
         cell.selectionStyle = .none
         
         return cell
+    }
+}
+
+extension ViewController: UITableViewDelegate {
+    // 특정 cell이 터치(선택)가되었을때 실행되는 메서드
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        // segue연결 메서드 (withIdentifier에 내가 원하는Segue의 Identifier 입력)
+        // sender에 IndexPath정보를 78줄 (array[indexPath])에 전달
+        performSegue(withIdentifier: "toDetail", sender: indexPath)
+    }
+    // Storyboard를 이용해서 데이터 전달을 할때 쓰는 메서드
+    // 1. prepare에서는 identifier를 먼저 확인
+    // 2.
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "toDetail" {
+            
+            // destination은 UIVC타입이라 다운 캐스팅으로 구체적인DetailVC타입을 불러온다.
+            var detailVC = segue.destination as! DetailViewController
+            
+            let array = movieDataManager.getMovieData()
+            let indexPath = sender as! IndexPath
+            
+            // 우리가 전달하기 원하는 영화 데이터
+            detailVC.movieData = array[indexPath.row]
+            
+        }
     }
 }
 
