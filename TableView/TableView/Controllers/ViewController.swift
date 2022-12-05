@@ -22,14 +22,18 @@ class ViewController: UIViewController {
         setupDatas()
     }
     
+    @IBAction func addButtonTapped(_ sender: UIBarButtonItem) {
+        movieDataManager.updateMovieData()
+        tableView.reloadData() // reload를 하지 않으면 배열에는 추가되지만 tableview에는 표시가 안된다!
+    }
     func setUpTableView() {
         // 요약: 델리게이트 패턴의 대리자 설정
         // UITableViewDataSource를 채택했기 때문에 delegate pattern과 같이 self(ViewController)를 할당해줌
         // 그래서 이게 무슨 소리? -> TableView에 대리자가 self(ViewController)가 된다는 뜻이다!
         tableView.dataSource = self
         tableView.delegate = self
-        // cell 높이 설정
-        tableView.rowHeight = 120
+        tableView.rowHeight = 120 // cell 높이 설정
+        title = "영화목록"
     }
     
     func setupDatas() {
