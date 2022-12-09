@@ -45,6 +45,8 @@ final class ViewController: UIViewController {
         tableView.dataSource = self
         
         tableView.rowHeight = 60
+        // MyTableViewCell 등록
+        tableView.register(MyTableViewCell.self, forCellReuseIdentifier: "MemberCell")
     }
     
     func setupDatas() {
@@ -72,7 +74,19 @@ extension ViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        return UITableViewCell()
+        
+        let cell = tableView.dequeueReusableCell(withIdentifier: "MemberCell", for: indexPath) as! MyTableViewCell
+        
+        // MyTableViewCell에 속성 감시자를 생성 했기때문에 memberListManager[indexPath.row] 데이터만 주면된다.
+        cell.member = memberListManager[indexPath.row]
+        cell.selectionStyle = .none
+        
+//        cell.mainImageView.image = memberListManager[indexPath.row].memberImage
+//        cell.memberNameLabel.text = memberListManager[indexPath.row].name
+//        cell.addressLabel.text = memberListManager[indexPath.row].address
+//        cell.selectionStyle = .none
+        
+        return cell
     }
     
     
