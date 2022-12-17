@@ -27,13 +27,13 @@ class DetailView: UIView {
             addressTextField.text = member.address
             
             // 나이항목 (옵셔널 정수형)
-//            guard let age = member.age else {
-//                // 나이 항목이 없으면 빈문자열로 표시
-//                ageTextField.text = ""
-//                return
-//            }
-//            // 나이 항목이 있으면 정수 ==> 문자열 변환 표기
-//            ageTextField.text = "\(age)"
+            //            guard let age = member.age else {
+            //                // 나이 항목이 없으면 빈문자열로 표시
+            //                ageTextField.text = ""
+            //                return
+            //            }
+            //            // 나이 항목이 있으면 정수 ==> 문자열 변환 표기
+            //            ageTextField.text = "\(age)"
             
             // 나이항목의 구현
             ageTextField.text = member.age != nil ? "\(member.age!)" : ""
@@ -240,6 +240,7 @@ class DetailView: UIView {
         backgroundColor = .white
         setupStackView()
         setupMemberIdTextField()
+        setupNotification()
     }
     
     required init?(coder: NSCoder) {
@@ -248,6 +249,13 @@ class DetailView: UIView {
     
     func setupStackView() {
         self.addSubview(stackView)
+    }
+    
+    // 키보드가 올라오거나 내려갈 때 moveUpAction, moveDownAction메서드(화면 조정)를 실행시키는 관찰자
+    func setupNotification() {
+        NotificationCenter.default.addObserver(self, selector: #selector(moveUpAction), name: UIResponder.keyboardWillShowNotification, object: nil)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(moveDownAction), name: UIResponder.keyboardWillHideNotification, object: nil)
     }
     
     func setupMemberIdTextField() {
@@ -291,6 +299,31 @@ class DetailView: UIView {
             stackView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 20),
             stackView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -20)
         ])
+    }
+    // 키보드가 올라는 순간에 moveUpAction이 실행되서 DetailView가 올라감
+    @objc func moveUpAction() {
+        stackViewTopConstraint.constant = -20
+        UIView.animate(withDuration: 0.2) {
+            self.layoutIfNeeded()
+        }
+    }
+    
+    @objc func moveDownAction() {
+        stackViewTopConstraint.constant = 10
+        UIView.animate(withDuration: 0.2) {
+            self.layoutIfNeeded()
+        }
+    }
+    
+    // 다른 곳(빈 화면) 터치 하면 키보드 내려가는 메서드
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.endEditing(true)
+    }
+    
+    // 소멸자 -> setupNotification()해제
+    deinit {
+        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
     }
 }
 
