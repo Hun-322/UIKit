@@ -30,11 +30,11 @@ final class ViewController: UIViewController {
         setupTableViewConstraints()
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        // 유저 정보가 업데이트되면 tableView도 새로고침
-        tableView.reloadData()
-    }
+//    override func viewWillAppear(_ animated: Bool) {
+//        super.viewWillAppear(animated)
+//        // 유저 정보가 업데이트되면 tableView도 새로고침
+//        tableView.reloadData()
+//    }
     
     // 네이게이션바 설정
     func setupNaviBar() {
@@ -83,6 +83,7 @@ final class ViewController: UIViewController {
     @objc func plusButtonTapped() {
         // 다음화면으로 이동 (멤버는 전달하지 않음)
         let detailVC = DetailViewController()
+        detailVC.delegate = self
         
         // 화면이동
         navigationController?.pushViewController(detailVC, animated: true)
@@ -127,5 +128,28 @@ extension ViewController: UITableViewDelegate {
         
         navigationController?.pushViewController(detailVC, animated: true)
     }
+}
+
+// MARK: - 멤버를 추가하거나, 업데이트에 대한 델리게이트 구현
+
+extension ViewController: MemberDelegate {
+    // 멤버가 추가되면 실행할 메서드 구현
+    func addNewMember(_ member: Member) {
+        // 모델에 멤버 추가
+        memberListManager.makeNewMember(member)
+        // TableView 다시 로드 (다시 그리기)
+        tableView.reloadData()
+    }
+    
+    // 멤버의 정보가 업데이트 되면 실행할 메서드 구현
+    func update(index: Int, _ member: Member) {
+        print("업데이트")
+        // 모델에 멤버 정보 업데이트
+        memberListManager.updateMemberInfo(index: index, member)
+        // TableView 다시 로드 (다시 그리기)
+        tableView.reloadData()
+    }
+    
+    
 }
 

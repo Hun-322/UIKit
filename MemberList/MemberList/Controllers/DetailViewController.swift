@@ -12,6 +12,9 @@ final class DetailViewController: UIViewController {
     
     private let detailView = DetailView()
     
+    // Custom Delegate 대리자 설정을 위한 변수 (weak은 class에만 사용가능)
+    weak var delegate: MemberDelegate?
+    
     var member: Member?
     
     override func loadView() {
@@ -77,14 +80,14 @@ final class DetailViewController: UIViewController {
             newMember.memberImage = detailView.mainImageView.image
             
             // 1) 델리게이트 방식이 아닌 구현❗️
-            let index = navigationController!.viewControllers.count - 2
+//            let index = navigationController!.viewControllers.count - 2
             // 전 화면에 접근하기 위함
-            let vc = navigationController?.viewControllers[index] as! ViewController
+//            let vc = navigationController?.viewControllers[index] as! ViewController
             // 전 화면의 모델에 접근해서 멤버를 추가
-            vc.memberListManager.makeNewMember(newMember)
+//            vc.memberListManager.makeNewMember(newMember)
             
             // 2) 델리게이트 방식으로 구현❗️
-            //            delegate?.addNewMember(newMember)
+            delegate?.addNewMember(newMember)
             
             // [2] 멤버가 있다면 (멤버의 내용을 업데이트 하기 위한 설정)
         } else {
@@ -101,11 +104,14 @@ final class DetailViewController: UIViewController {
             detailView.member = member
             
             // 1) 델리게이트 방식이 아닌 구현❗️
-            let index = navigationController!.viewControllers.count - 2
+//            let index = navigationController!.viewControllers.count - 2
             // 전 화면에 접근하기 위함
-            let vc = navigationController?.viewControllers[index] as! ViewController
+//            let vc = navigationController?.viewControllers[index] as! ViewController
             // 전 화면의 모델에 접근해서 멤버를 업데이트
-            vc.memberListManager.updateMemberInfo(index: memberId, member!)
+//            vc.memberListManager.updateMemberInfo(index: memberId, member!)
+            
+            // 2) 델리게이트 방식으로 구현❗️
+            delegate?.update(index: memberId, member!)
         }
         
         // (일처리를 다한 후에) 전화면으로 돌아가기

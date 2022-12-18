@@ -7,6 +7,12 @@
 
 import UIKit
 
+// AnyObject를 상속해야만 DetailVC에 weak키워드를 사용해서 강한순환참조를 막을 수 있다.
+protocol MemberDelegate: AnyObject {
+    func addNewMember(_ member: Member)
+    func update(index: Int, _ member: Member)
+}
+
 // 간단한 데이터 모델들은 class보다 가벼운 struct로 많이 구현한다. (데이터와 관련된 Model)
 struct Member {
     
