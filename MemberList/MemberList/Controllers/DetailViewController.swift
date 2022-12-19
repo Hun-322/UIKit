@@ -10,17 +10,21 @@ import PhotosUI
 
 final class DetailViewController: UIViewController {
     
+    // MVC패턴을 위한 따로만든 뷰
     private let detailView = DetailView()
     
     // Custom Delegate 대리자 설정을 위한 변수 (weak은 class에만 사용가능)
     weak var delegate: MemberDelegate?
     
+    // 전화면(VC)에서 Member데이터를 전달 받기 위한 변수
     var member: Member?
     
+    // MVC패턴을 위해서, view교체
     override func loadView() {
         view = detailView
     }
     
+    // MARK: - viewDidLoad
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -29,6 +33,7 @@ final class DetailViewController: UIViewController {
         setupTapGestures()
     }
     
+    // 멤버를 뷰에 전달⭐️ (뷰에서 알아서 화면 셋팅 -> didSet을 사용하기 때문)
     private func setupData() {
         detailView.member = member
     }
@@ -63,10 +68,11 @@ final class DetailViewController: UIViewController {
         self.present(picker, animated: true)
     }
     
+    // MARK: - SAVE버튼 또는 UPDATE버튼이 눌렸을때 동작
     @objc func saveButtonTapped() {
         print("버튼 눌림")
         
-        // [1] 멤ㅁ버가 없다면 (새로운 멤버를 추가하는 화면)
+        // [1] 멤버가 없다면 (새로운 멤버를 추가하는 화면)
         if member == nil {
             // 입력이 안되어 있다면.. (일반적으로) 빈문자열로 저장
             let name = detailView.nameTextField.text ?? ""
@@ -79,14 +85,14 @@ final class DetailViewController: UIViewController {
             Member(name: name, age: age, phone: phoneNumber, address: address)
             newMember.memberImage = detailView.mainImageView.image
             
-            // 1) 델리게이트 방식이 아닌 구현❗️
+            // 1) 델리게이트 방식이 아닌 구현❗️❗️❗️
 //            let index = navigationController!.viewControllers.count - 2
             // 전 화면에 접근하기 위함
 //            let vc = navigationController?.viewControllers[index] as! ViewController
             // 전 화면의 모델에 접근해서 멤버를 추가
 //            vc.memberListManager.makeNewMember(newMember)
             
-            // 2) 델리게이트 방식으로 구현❗️
+            // 2) 델리게이트 방식으로 구현❗️❗️❗️
             delegate?.addNewMember(newMember)
             
             // [2] 멤버가 있다면 (멤버의 내용을 업데이트 하기 위한 설정)
@@ -103,14 +109,14 @@ final class DetailViewController: UIViewController {
             // 뷰에도 바뀐 멤버를 전달 (뷰컨트롤러 ==> 뷰)
             detailView.member = member
             
-            // 1) 델리게이트 방식이 아닌 구현❗️
+            // 1) 델리게이트 방식이 아닌 구현❗️❗️❗️
 //            let index = navigationController!.viewControllers.count - 2
             // 전 화면에 접근하기 위함
 //            let vc = navigationController?.viewControllers[index] as! ViewController
             // 전 화면의 모델에 접근해서 멤버를 업데이트
 //            vc.memberListManager.updateMemberInfo(index: memberId, member!)
             
-            // 2) 델리게이트 방식으로 구현❗️
+            // 2) 델리게이트 방식으로 구현❗️❗️❗️
             delegate?.update(index: memberId, member!)
         }
         
@@ -119,9 +125,11 @@ final class DetailViewController: UIViewController {
     }
 }
 
+// MARK: - 피커뷰 델리게이트 설정
 
 extension DetailViewController: PHPickerViewControllerDelegate {
     
+    // 사진이 선택이 된 후에 호출되는 메서드
     func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
         // 피커뷰 dismiss(전 화면으로 이동)
         picker.dismiss(animated: true)

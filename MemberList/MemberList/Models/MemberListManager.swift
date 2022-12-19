@@ -9,8 +9,10 @@ import Foundation
 // 비즈니스 로직과 관련된 Model
 final class MemberListManager {
     
+    // 멤버리스트를 저장하기 위한 배열
     private var memberList: [Member] = []
     
+    // 전체 멤버 리스트 만들기 (꼭 필요하지 않고, 원래 배열에 멤버 생성해도 됨), 데이터 통신 느낌 낼려고 그냥 만든거임 ㅋㅋ
     func makeMembersListDatas() {
         memberList = [
             Member(name: "홍길동", age: 20, phone: "010-1111-2222", address: "서울"),

@@ -9,6 +9,9 @@ import UIKit
 
 class DetailView: UIView {
     
+    // MARK: - 멤버 저장속성 구현
+    // 멤버 데이터가 바뀌면 ==> didSet(속성감시자) 실행
+    // 속성감시자도 (저장 속성을 관찰하는) 어쨌든 자체는 메서드다!
     var member: Member? {
         didSet {
             guard var member = member else {
@@ -235,6 +238,8 @@ class DetailView: UIView {
     // 애니메이션을 위한 속성 선언
     var stackViewTopConstraint: NSLayoutConstraint!
     
+    // MARK: - 생성자 셋팅
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         backgroundColor = .white
@@ -251,8 +256,12 @@ class DetailView: UIView {
         self.addSubview(stackView)
     }
     
+    // MARK: - 노티피케이션 셋팅
+    
     // 키보드가 올라오거나 내려갈 때 moveUpAction, moveDownAction메서드(화면 조정)를 실행시키는 관찰자
     func setupNotification() {
+        // 노티피케이션의 등록 ⭐️
+        // (OS차원에서 어떤 노티피케이션이 발생하는지 이미 정해져 있음)
         NotificationCenter.default.addObserver(self, selector: #selector(moveUpAction), name: UIResponder.keyboardWillShowNotification, object: nil)
         
         NotificationCenter.default.addObserver(self, selector: #selector(moveDownAction), name: UIResponder.keyboardWillHideNotification, object: nil)
@@ -300,6 +309,8 @@ class DetailView: UIView {
             stackView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -20)
         ])
     }
+    // MARK: - 키보드가 나타날때와 내려갈때의 애니메이션 셋팅
+    
     // 키보드가 올라는 순간에 moveUpAction이 실행되서 DetailView가 올라감
     @objc func moveUpAction() {
         stackViewTopConstraint.constant = -20
@@ -319,6 +330,8 @@ class DetailView: UIView {
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.endEditing(true)
     }
+    
+    // MARK: - 소멸자 구현
     
     // 소멸자 -> setupNotification()해제
     deinit {

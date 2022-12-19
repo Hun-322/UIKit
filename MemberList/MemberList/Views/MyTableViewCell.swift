@@ -9,7 +9,8 @@ import UIKit
 
 class MyTableViewCell: UITableViewCell {
     
-    // 속성 감시자
+    // MARK: - 멤버 저장속성 구현
+    // 멤버가 변할때마다 자동으로 업데이트 되도록 구현 didSet(속성 감시자) ⭐️
     var member: Member? {
         didSet {
             guard var member = member else { return }
@@ -51,6 +52,7 @@ class MyTableViewCell: UITableViewCell {
         return sv
     }()
     
+    // MARK: - 생성자 셋팅
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: .default, reuseIdentifier: reuseIdentifier)
@@ -84,6 +86,7 @@ class MyTableViewCell: UITableViewCell {
 //    }
     
     //MARK: - 오토레이아웃 셋팅
+    
     // 오토레이아웃 정하는 정확한 시점
     override func updateConstraints() {
         setConstraints()
